@@ -17,7 +17,7 @@ public class Construccion {
 	
 	@Id
 	@Column(name = "ID_CONSTRUCCION")
-	private long idConstruccion;
+	private Integer idConstruccion;
 	
 	private String nombre;
 	
@@ -39,11 +39,11 @@ public class Construccion {
 	@OneToMany(mappedBy = "construccion")
     private List<Solicitudes> solicitud;
 	
-	public long getIdConstruccion() {
+	public Integer getIdConstruccion() {
 		return idConstruccion;
 	}
 	
-	public void setIdConstruccion(long idConstruccion) {
+	public void setIdConstruccion(Integer idConstruccion) {
 		this.idConstruccion = idConstruccion;
 	}
 	

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.construccion.entity.NotificacionSolicitud;
 import com.construccion.entity.Solicitudes;
 import com.construccion.service.SolicitudService;
 
@@ -35,11 +36,15 @@ public class SolicitudController {
     	}
     }
     
-    @PostMapping("/save")
+    @PostMapping("/notificar")
     @ApiOperation("Permite crear en la BD una nueva solicitud")
     @ApiResponse(code = 200, message = "OK")
-   	public ResponseEntity<List<Solicitudes>> save(@RequestBody List<Solicitudes> solicitudes) {
-   		return new ResponseEntity<> (solicitudServicio.save(solicitudes), HttpStatus.CREATED);
+   	public ResponseEntity<NotificacionSolicitud> notificar(@RequestBody List<Solicitudes> solicitudes) {
+    	if(solicitudServicio.notificar(solicitudes).getEstadoNotificacion().equals("OK")) {
+   			return new ResponseEntity<> (solicitudServicio.notificar(solicitudes),HttpStatus.CREATED);
+    	}else {
+    		return new ResponseEntity<> (solicitudServicio.notificar(solicitudes), HttpStatus.CONFLICT);
+    	}
    	}
     
 

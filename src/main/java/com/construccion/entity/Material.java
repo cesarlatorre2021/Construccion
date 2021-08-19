@@ -1,15 +1,10 @@
 package com.construccion.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,17 +25,6 @@ public class Material {
 	
 	@Column(name = "FECHA_MODIFICACION_REG")
 	private LocalDateTime fechaModificacion;
-	
-	@ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-	})
-	@JoinTable(
-	        name = "materiales_solicitudes",
-	        joinColumns = {@JoinColumn(name = "id_material")},
-	        inverseJoinColumns = {@JoinColumn(name = "id_solicitud")}
-	)
-	private List<Solicitudes> solicitud;
 	
 	public Long getIdMaterial() {
 		return idMaterial;
@@ -82,12 +66,4 @@ public class Material {
 		this.fechaModificacion = fechaModificacion;
 	}
 
-	public List<Solicitudes> getSolicitud() {
-		return solicitud;
-	}
-
-	public void setSolicitud(List<Solicitudes> solicitud) {
-		this.solicitud = solicitud;
-	}
-	
 }

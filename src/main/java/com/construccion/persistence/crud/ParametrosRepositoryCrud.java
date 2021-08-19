@@ -11,6 +11,6 @@ public interface ParametrosRepositoryCrud  extends CrudRepository <ParametrosCon
 	@Query(value = "SELECT * "
 			+ "       FROM PARAMETROS_CONSTRUCCION CO "
 			+ "      WHERE CO.ID_CONSTRUCCION = :idConstruccion", nativeQuery = true)
-	ParametrosConstruccion consultarParametrosPorConstruccion(@Param("idConstruccion") long idConstruccion);
+	ParametrosConstruccion consultarParametrosPorConstruccion(@Param("idConstruccion") Integer idConstruccion);
 
 }

@@ -14,7 +14,7 @@ public class ParametrosRepositoryImpl implements ParametrosRepository {
 	ParametrosRepositoryCrud parametrosRepositoryCrud;
 
 	@Override
-	public ParametrosConstruccion consultarParametrosPorConstruccion(Long idConstruccion) {
+	public ParametrosConstruccion consultarParametrosPorConstruccion(Integer idConstruccion) {
 		return parametrosRepositoryCrud.consultarParametrosPorConstruccion(idConstruccion);
 	}
 

@@ -17,7 +17,15 @@ public interface ProyectoRepositoryCrud extends CrudRepository <Proyecto, Intege
 	@Query(value = "UPDATE PROYECTOS "
 			+ "        SET FECHA_FIN_PROYECTO = :fechaFinProyecto "
 			+ "      WHERE ID_PROYECTO = :idProyecto ", nativeQuery = true)
-	void modificarMaterial(@Param("fechaFinProyecto") LocalDateTime fechaFinProyecto,
-			               @Param("idProyecto") long idProyecto);
+	void modificarFechaFinalProyecto(@Param("fechaFinProyecto") LocalDateTime fechaFinProyecto,
+									 @Param("idProyecto") Integer idProyecto);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE PROYECTOS "
+			+ "        SET FECHA_INICIO_PROYECTO = :fechaInicioProyecto "
+			+ "      WHERE ID_PROYECTO = :idProyecto ", nativeQuery = true)
+	void modificarFechaInicialProyecto(@Param("fechaInicioProyecto") LocalDateTime fechaInicioProyecto,
+								       @Param("idProyecto") Integer idProyecto);
 
 }

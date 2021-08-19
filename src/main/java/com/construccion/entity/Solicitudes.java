@@ -1,13 +1,11 @@
 package com.construccion.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -39,9 +37,6 @@ public class Solicitudes {
 	@ManyToOne
     @JoinColumn(name = "ID_CONSTRUCCION", insertable = true, updatable = false)
     private Construccion construccion;
-	
-	@ManyToMany(mappedBy = "solicitud")
-    private List<Material> materiales;
 	
 	public Long getIdSolicitud() {
 		return idSolicitud;
