@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "274e65f2-3c67-4e86-bdcf-0fa58dec74fc",
+		"name": "Construcción",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Solicitud",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"idSolicitud\": 4,\r\n        \"estado\": \"PENDIENTE\",\r\n        \"coordenadasConstruccion\": \"3,1\",\r\n        \"fechaInicioConstruccion\": null,\r\n        \"fechaFinConstruccion\": null,\r\n        \"fechaCreacion\": null,\r\n        \"fechaModificacion\": null,\r\n        \"construccion\": {\r\n            \"idConstruccion\": 2,\r\n            \"proyecto\": {\r\n                \"idProyecto\": 1\r\n            }\r\n        }\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/construccion/api/solicitud/notificar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"construccion",
+						"api",
+						"solicitud",
+						"notificar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta Fecha Proyecto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/construccion/api/proyecto/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"construccion",
+						"api",
+						"proyecto",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar Informe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/construccion/api/informe/generar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"construccion",
+						"api",
+						"informe",
+						"generar"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

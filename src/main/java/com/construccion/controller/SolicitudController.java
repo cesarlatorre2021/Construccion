@@ -36,14 +36,18 @@ public class SolicitudController {
     	}
     }
     
-    @PostMapping("/notificar")
+	@PostMapping("/notificar")
     @ApiOperation("Permite crear en la BD una nueva solicitud")
     @ApiResponse(code = 200, message = "OK")
    	public ResponseEntity<NotificacionSolicitud> notificar(@RequestBody List<Solicitudes> solicitudes) {
-    	if(solicitudServicio.notificar(solicitudes).getEstadoNotificacion().equals("OK")) {
-   			return new ResponseEntity<> (solicitudServicio.notificar(solicitudes),HttpStatus.CREATED);
+    	
+    	NotificacionSolicitud notificacionSolicitud;
+    	notificacionSolicitud = (NotificacionSolicitud) solicitudServicio.notificar(solicitudes);
+    	
+    	if(notificacionSolicitud.getEstadoNotificacion() == "OK") {
+   			return new ResponseEntity<> (notificacionSolicitud,HttpStatus.CREATED);
     	}else {
-    		return new ResponseEntity<> (solicitudServicio.notificar(solicitudes), HttpStatus.CONFLICT);
+    		return new ResponseEntity<> (notificacionSolicitud, HttpStatus.CONFLICT);
     	}
    	}
     

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.construccion.entity.Informe;
 
 @RestController
-@RequestMapping("/proyecto")
+@RequestMapping("/informe")
 public class InformeController {
 	
 	@PersistenceContext
     private EntityManager entityManager;
 		
-    @GetMapping("/emp-dtls")
+    @GetMapping("/generar")
     public ResponseEntity<Informe> getEmp() {
     	
     	Informe informe = new Informe();

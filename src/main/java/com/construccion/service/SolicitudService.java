@@ -40,13 +40,15 @@ public class SolicitudService {
 	
 	private final static Logger LOGGER = Logger.getLogger("com.construccion.service.SolicitudService");
 	
+	private NotificacionSolicitud notificarSolicitud;
+	
 
 	public List<Solicitudes> getAll() {
         return solicitudRepository.listarSolicitud();
     }
 		
 	@Transactional(rollbackOn = Exception.class)
-	public boolean save(List<Solicitudes> solicitudes) {
+	public NotificacionSolicitud save(List<Solicitudes> solicitudes) {
 		
 		LocalDateTime fechaActual = LocalDateTime.now();
 		LocalDateTime fecha = LocalDateTime.now();
@@ -54,9 +56,9 @@ public class SolicitudService {
 		LocalDateTime fechaFinal = LocalDateTime.now();
 		LocalDateTime nuevaFechaFinal = null;
 		Solicitudes solicitud;
-		boolean snSolicitud = true;
 		
-		
+		notificarSolicitud = new NotificacionSolicitud();
+			
 		//SE OBTIENE EL ID DEL PROYECTO
 		try {
 			Integer idProyecto = construccionRepository.listarConstruccionByID(
@@ -80,7 +82,7 @@ public class SolicitudService {
 		    int CantidadArenaDisponible   = materialRepository.consultarMaterialDisponible().get(2).getCantidadDisponible();
 		    int CantidadMaderaDisponible  = materialRepository.consultarMaterialDisponible().get(3).getCantidadDisponible();
 			int CantidadAdobeDisponible   = materialRepository.consultarMaterialDisponible().get(4).getCantidadDisponible();
-		    
+			
 			//SI LA CANTIDAD DISPONIBLE DE CADA MATERIAL ES MAYOR A LA REQUERIDA POR LA CONSTRUCCIÓN, SE PROCEDE A CREAR LA SOLICITUD
 		    if(cantidadAdobeParametro <= CantidadAdobeDisponible &&
 		       cantidadArenaParametro <= CantidadArenaDisponible && 
@@ -115,6 +117,7 @@ public class SolicitudService {
 		    	
 		    	//SI ES LA PRIMERA SOLICITUD SE DEFINEN LAS FECHAS CON RESPECTO A LA FECHA ACTUAL DEL SISTEMA
 		    	if (getAll().isEmpty()) {
+		    		System.out.println("Entra por aca 1: " + getAll().size());
 			    	solicitud = solicitudes.get(0);
 			    	solicitud.setFechaInicioConstruccion(nuevaFecha);
 			    	solicitud.setFechaFinConstruccion(nuevaFechaFinal);
@@ -123,7 +126,7 @@ public class SolicitudService {
 		    		proyectoRepository.modificarFechaInicialProyecto(idProyecto, nuevaFecha);
 		    	//SI NO ES LA PRIMERA SOLICITUD, ENTONCES SE DEBE TOMAR EN CUENTA LAS FECHAS INICIAL Y FINAL DE LA ULTIMA CONSTRUCCION SOLICITADA
 		    	} else {
-		    		System.out.println("Entra por aca");
+		    		System.out.println("Entra por aca 2");
 		    	    fechaFinal = getAll().get(0).getFechaFinConstruccion();
 			    	nuevaFechaFinal = fechaFinal.plusDays(parametrosRepository.consultarParametrosPorConstruccion(
 			    								 solicitudes.get(0).getConstruccion().getIdConstruccion()).getDuracionConstruccion() + 2);
@@ -139,31 +142,31 @@ public class SolicitudService {
 		    	
 		    	//SE ACTUALIZA LA FECHA FIN DEL PROYECTO
 		    	proyectoRepository.modificarFechaFinalProyecto(idProyecto, nuevaFechaFinal);
+		    	
+		    	notificarSolicitud.setEstadoNotificacion("OK");
+				notificarSolicitud.setMensajeNotificacion("Se ha realizado con éxito la solicitud");
 		   
 		    }else{
-		    	snSolicitud = false;
+		    	notificarSolicitud.setEstadoNotificacion("ER");
+				notificarSolicitud.setMensajeNotificacion("No existe material suficiente para la construcción");
 		    }
 		}catch (Exception e) {
 			LOGGER.log(Level.WARNING, "Proceso Fallido");
-			snSolicitud = false;
+			notificarSolicitud.setEstadoNotificacion("ER");
+			notificarSolicitud.setMensajeNotificacion("No se logro realizar la solicitud por error del sistema");
 		}
 	    
-	    return snSolicitud;
+	    return notificarSolicitud;
     }
 	
-	public NotificacionSolicitud notificar(List<Solicitudes> solicitudes) {
-		
-	    NotificacionSolicitud notificarSolicitud = new NotificacionSolicitud();
-		
-		if(save(solicitudes)) {
-			notificarSolicitud.setEstadoNotificacion("OK");
-			notificarSolicitud.setMensajeNotificacion("Se ha realizado la solicitud exitosamente");
-			solicitudRepository.save(solicitudes);
-		}else {
-			notificarSolicitud.setEstadoNotificacion("ER");
-			notificarSolicitud.setMensajeNotificacion("No se ha logrado realizar la solicitud");
-		}
-		
+	public NotificacionSolicitud notificar(List<Solicitudes> solicitudes) {	
+		notificarSolicitud = new NotificacionSolicitud();
+	    notificarSolicitud = save(solicitudes);
+	    
+	    if (notificarSolicitud.getEstadoNotificacion() == "OK") {
+	    	solicitudRepository.save(solicitudes);
+	    }
+	      
 		return notificarSolicitud;	
 	}
 	
