@@ -27,5 +27,7 @@ La empresa “Constructores S.A.S” requiere desarrollar una aplicación capaz 
 		* Script de creación de procedimientos PR_ACT_ESTADO_INICIAL.sql, PR_GENERAR_INFORME.sql y PR_ACT_ESTADO_FINALIZADO.sql. (Con el nuevo usuario).
 		* Script de creación de JOBS JOB_ACT_ESTADO_ORDENES.sql. (Con el nuevo usuario).
 		
-3) En la carpeta "Documentacion" descargar y leer el documento "DocumentaciónProyecto.pdf" que contiene toda la descripción funcional del proyecto.
+3) En la carpeta "Documentacion" descargar y leer el documento "DocumentaciónProyecto.pdf" que contiene toda la descripción funcional del proyecto. Ver el siguiente enlace para la documentación swagger:
+
+		* http://localhost:9090/construccion/api/swagger-ui.html
 		
